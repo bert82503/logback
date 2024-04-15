@@ -27,6 +27,8 @@ import java.util.Set;
  * distinguishing interleaved log output from different sources. Log output is
  * typically interleaved when a server handles multiple clients
  * near-simultaneously.
+ * MDC适配者实现，映射诊断上下文(MDC)是一种用于区分来自不同源的交错日志输出的工具。
+ * 当服务器几乎同时处理多个客户端时，日志输出通常是交错的。
  * <p/>
  * <b><em>The MDC is managed on a per thread basis</em></b>. Note that a child
  * thread <b>does not</b> inherit the mapped diagnostic context of its parent.
@@ -38,13 +40,20 @@ import java.util.Set;
  * @author Ceki G&uuml;lc&uuml;
  * @author Michael Franz
  */
-public class LogbackMDCAdapter implements MDCAdapter  {
+public class LogbackMDCAdapter implements MDCAdapter {
 
 
     // BEWARE: Keys or values placed in a ThreadLocal should not be of a type/class
     // not included in the JDK. See also https://jira.qos.ch/browse/LOGBACK-450
+    // 线程本地变量
 
+    /**
+     * 读写操作
+     */
     final ThreadLocal<Map<String, String>> readWriteThreadLocalMap = new ThreadLocal<Map<String, String>>();
+    /**
+     * 只读视图，不可修改
+     */
     final ThreadLocal<Map<String, String>> readOnlyThreadLocalMap = new ThreadLocal<Map<String, String>>();
     private final ThreadLocalMapOfStacks threadLocalMapOfDeques = new ThreadLocalMapOfStacks();
 
@@ -53,6 +62,7 @@ public class LogbackMDCAdapter implements MDCAdapter  {
      * <code>key</code> parameter into the current thread's context map. Note that
      * contrary to log4j, the <code>val</code> parameter can be null.
      * <p/>
+     * 将与 key 参数标识的上下文值（val 参数）放入当前线程的上下文映射中。
      * <p/>
      * If the current thread does not have a context map it is created as a side
      * effect of this call.
@@ -65,6 +75,7 @@ public class LogbackMDCAdapter implements MDCAdapter  {
      *
      * @throws IllegalArgumentException in case the "key" parameter is null
      */
+    @Override
     public void put(String key, String val) throws IllegalArgumentException {
         if (key == null) {
             throw new IllegalArgumentException("key cannot be null");
@@ -82,15 +93,16 @@ public class LogbackMDCAdapter implements MDCAdapter  {
     /**
      * Get the context identified by the <code>key</code> parameter.
      * <p/>
+     * 获取由键参数标识的诊断上下文。
      * <p/>
      * This method has no side effects.
      */
     @Override
     public String get(String key) {
-        Map<String, String> hashMap = readWriteThreadLocalMap.get();
+        Map<String, String> map = readWriteThreadLocalMap.get();
 
-        if ((hashMap != null) && (key != null)) {
-            return hashMap.get(key);
+        if ((map != null) && (key != null)) {
+            return map.get(key);
         } else {
             return null;
         }
@@ -119,6 +131,7 @@ public class LogbackMDCAdapter implements MDCAdapter  {
 
     /**
      * Clear all entries in the MDC.
+     * 清除 MDC 中的所有条目。
      */
     @Override
     public void clear() {
@@ -129,6 +142,7 @@ public class LogbackMDCAdapter implements MDCAdapter  {
     /**
      * <p>Get the current thread's MDC as a map. This method is intended to be used
      * internally.</p>
+     * 获取当前线程的 MDC 作为映射。
      *
      * The returned map is unmodifiable (since version 1.3.2/1.4.2).
      */
@@ -138,7 +152,9 @@ public class LogbackMDCAdapter implements MDCAdapter  {
         if (readOnlyMap == null) {
             Map<String, String> current = readWriteThreadLocalMap.get();
             if (current != null) {
+                // 映射表拷贝复制
                 final Map<String, String> tempMap = new HashMap<String, String>(current);
+                // 不可修改
                 readOnlyMap = Collections.unmodifiableMap(tempMap);
                 readOnlyThreadLocalMap.set(readOnlyMap);
             }
@@ -149,9 +165,12 @@ public class LogbackMDCAdapter implements MDCAdapter  {
     /**
      * Return a copy of the current thread's context map. Returned value may be
      * null.
+     * 返回当前线程的上下文映射的副本，其中包含字符串类型的键和值。
+     * 返回值可能为 null。
      */
-    public Map getCopyOfContextMap() {
-        Map<String, String> readOnlyMap = getPropertyMap();
+    @Override
+    public Map<String, String> getCopyOfContextMap() {
+        Map<String, String> readOnlyMap = this.getPropertyMap();
         if (readOnlyMap == null) {
             return null;
         } else {
