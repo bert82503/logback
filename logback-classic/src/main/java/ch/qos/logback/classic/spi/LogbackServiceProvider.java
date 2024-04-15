@@ -15,6 +15,9 @@ import ch.qos.logback.core.joran.spi.JoranException;
 import ch.qos.logback.core.status.StatusUtil;
 import ch.qos.logback.core.util.StatusPrinter;
 
+/**
+ * Logback实现的SLF4J服务提供者
+ */
 public class LogbackServiceProvider implements SLF4JServiceProvider {
 
     final static String NULL_CS_URL = CoreConstants.CODES_URL + "#null_CS";
@@ -26,8 +29,14 @@ public class LogbackServiceProvider implements SLF4JServiceProvider {
     // to avoid constant folding by the compiler, this field must *not* be final
     public static String REQUESTED_API_VERSION = "2.0.99"; // !final
 
+    /**
+     * 日志记录器上下文
+     */
     private LoggerContext defaultLoggerContext;
     private IMarkerFactory markerFactory;
+    /**
+     * MDC适配者实现实例
+     */
     private LogbackMDCAdapter mdcAdapter;
     // private final ContextSelectorStaticBinder contextSelectorBinder =
     // ContextSelectorStaticBinder.getSingleton();
@@ -36,11 +45,15 @@ public class LogbackServiceProvider implements SLF4JServiceProvider {
 
     @Override
     public void initialize() {
+        // 日志记录器上下文
         defaultLoggerContext = new LoggerContext();
         defaultLoggerContext.setName(CoreConstants.DEFAULT_CONTEXT_NAME);
+        // 初始化
         initializeLoggerContext();
+        // 启动
         defaultLoggerContext.start();
         markerFactory = new BasicMarkerFactory();
+        // MDC适配者实现实例
         mdcAdapter = new LogbackMDCAdapter();
         // set the MDCAdapter for the defaultLoggerContext immediately
         defaultLoggerContext.setMDCAdapter(mdcAdapter);

@@ -1,1 +1,2 @@
+#SLF4JServiceProvider
 ch.qos.logback.classic.spi.LogbackServiceProvider
