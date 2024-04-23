@@ -17,25 +17,31 @@ import ch.qos.logback.core.spi.ContextAware;
 import ch.qos.logback.core.spi.FilterAttachable;
 import ch.qos.logback.core.spi.LifeCycle;
 
+/**
+ * 日志事件追加者
+ */
 public interface Appender<E> extends LifeCycle, ContextAware, FilterAttachable<E> {
 
     /**
      * Get the name of this appender. The name uniquely identifies the appender.
+     * 获取追加者的名称
      */
     String getName();
 
     /**
      * This is where an appender accomplishes its work. Note that the argument is of
      * type Object.
+     * 这是追加者完成工作的地方。请注意，参数的类型为Object。
+     * 【业务事实】
      * 
-     * @param event
+     * @param event 日志事件
      */
     void doAppend(E event) throws LogbackException;
 
     /**
      * Set the name of this appender. The name is used by other components to
      * identify this appender.
-     * 
+     * 设置追加者的名称
      */
     void setName(String name);
 

@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Internal error messages (statii) are managed by instances of this interface.
+ * 状态消息管理器
  * 
  * @author Ceki G&uuml;lc&uuml;
  */

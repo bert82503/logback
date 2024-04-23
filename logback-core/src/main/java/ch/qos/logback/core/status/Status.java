@@ -15,6 +15,9 @@ package ch.qos.logback.core.status;
 
 import java.util.Iterator;
 
+/**
+ * 状态消息
+ */
 public interface Status {
 
     int INFO = 0;

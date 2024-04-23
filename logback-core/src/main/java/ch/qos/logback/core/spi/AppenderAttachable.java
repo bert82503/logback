@@ -19,22 +19,26 @@ import ch.qos.logback.core.Appender;
 
 /**
  * Interface for attaching appenders to objects.
+ * 将日志事件追加者列表附加到对象。
  * 
  * @author Ceki G&uuml;lc&uuml;
  */
 public interface AppenderAttachable<E> {
     /**
      * Add an appender.
+     * 增加一个日志事件追加者
      */
     void addAppender(Appender<E> newAppender);
 
     /**
      * Get an iterator for appenders contained in the parent object.
+     * 日志事件追加者列表的迭代器
      */
     Iterator<Appender<E>> iteratorForAppenders();
 
     /**
      * Get an appender by name.
+     * 通过名称获取日志事件追加者
      */
     Appender<E> getAppender(String name);
 
@@ -51,6 +55,7 @@ public interface AppenderAttachable<E> {
 
     /**
      * Detach the appender passed as parameter from the list of appenders.
+     * 从追加者列表中分离这个追加者
      */
     boolean detachAppender(Appender<E> appender);
 

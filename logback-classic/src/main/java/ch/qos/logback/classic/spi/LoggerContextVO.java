@@ -22,6 +22,7 @@ import ch.qos.logback.classic.LoggerContext;
  * LoggerContextVO offers a restricted view of LoggerContext intended to be
  * exposed by LoggingEvent to remote systems. This restricted view is optimized
  * for serialization.
+ * 日志记录器上下文的视图对象
  * 
  * <p>
  * Some of the LoggerContext or Logger attributes MUST not survive
@@ -38,7 +39,13 @@ public class LoggerContextVO implements Serializable {
     private static final long serialVersionUID = 5488023392483144387L;
 
     protected String name;
+    /**
+     * 属性集
+     */
     protected Map<String, String> propertyMap;
+    /**
+     * 出生时间
+     */
     protected long birthTime;
 
     public LoggerContextVO(LoggerContext lc) {

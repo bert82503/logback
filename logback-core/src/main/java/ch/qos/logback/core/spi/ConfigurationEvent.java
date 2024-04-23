@@ -17,6 +17,7 @@ package ch.qos.logback.core.spi;
 /**
  * This class configuration events which can be of various types such as
  *  CHANGE_DETECTED, CONFIGURATION_STARTED and CONFIGURATION_ENDED.
+ *  配置事件
  *
  *  Configuration events can be accompanied by supplemental data which can be null.
  *

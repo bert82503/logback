@@ -16,6 +16,9 @@ package ch.qos.logback.core.spi;
 import java.util.Map;
 import java.util.Properties;
 
+/**
+ * 属性键值对的容器
+ */
 public interface PropertyContainer {
 
 

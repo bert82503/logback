@@ -15,15 +15,25 @@ package ch.qos.logback.core.spi;
 
 /**
  * Components supporting start/stop implement this interface.
+ * 组件生命周期，支持启动/停止的组件。
  *
  * @since 1.0.0
  */
 public interface LifeCycle {
 
+    /**
+     * 启动阶段
+     */
     void start();
 
+    /**
+     * 关闭阶段
+     */
     void stop();
 
+    /**
+     * 是否是启动状态
+     */
     boolean isStarted();
 
 }
