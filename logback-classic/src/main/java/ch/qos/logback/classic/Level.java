@@ -20,6 +20,7 @@ import org.slf4j.spi.LocationAwareLogger;
  * Defines the set of levels recognized by logback-classic, that is
  * {@link #OFF}, {@link #ERROR}, {@link #WARN}, {@link #INFO}, {@link #DEBUG},
  * {@link #TRACE} and {@link #ALL}.
+ * 日志级别
  * <p/>
  * The <code>Level</code> class is final and cannot be sub-classed.
  * </p>

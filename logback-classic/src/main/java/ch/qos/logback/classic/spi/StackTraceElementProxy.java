@@ -15,10 +15,16 @@ package ch.qos.logback.classic.spi;
 
 import java.io.Serializable;
 
+/**
+ * 调用堆栈元素代理
+ */
 public class StackTraceElementProxy implements Serializable {
 
     private static final long serialVersionUID = -2374374378980555982L;
 
+    /**
+     * 调用堆栈元素
+     */
     final StackTraceElement ste;
     // save a byte or two during serialization, as we can
     // reconstruct this field from 'ste'

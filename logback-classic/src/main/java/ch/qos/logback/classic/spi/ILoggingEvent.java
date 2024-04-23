@@ -26,31 +26,58 @@ import ch.qos.logback.core.spi.DeferredProcessingAware;
 /**
  * The central interface in logback-classic. In a nutshell, logback-classic is
  * nothing more than a processing chain built around this interface.
+ * logback-classic 中的中心接口。
+ * 简而言之，logback-classic 只不过是围绕这个接口构建的处理链。
  * 
  * @author Ceki G&uuml;lc&uuml;
  * @since 0.9.16
  */
 public interface ILoggingEvent extends DeferredProcessingAware {
 
+    /**
+     * @return 线程名称
+     */
     String getThreadName();
 
+    /**
+     * @return 日志级别
+     */
     Level getLevel();
 
+    /**
+     * @return 消息
+     */
     String getMessage();
 
+    /**
+     * @return 参数数组
+     */
     Object[] getArgumentArray();
 
+    /**
+     * @return 格式化的消息
+     */
     String getFormattedMessage();
 
+    /**
+     * @return 日志记录器的名称
+     */
     String getLoggerName();
 
+    /**
+     * @return 日志记录器上下文的视图对象
+     */
     LoggerContextVO getLoggerContextVO();
 
+    /**
+     * @return 可抛出的异常的代理对象
+     */
     IThrowableProxy getThrowableProxy();
 
     /**
      * Return caller data associated with this event. Note that calling this event
      * may trigger the computation of caller data.
+     * 返回与此事件关联的调用方数据。
      * 
      * @return the caller data associated with this event.
      * 
@@ -74,6 +101,7 @@ public interface ILoggingEvent extends DeferredProcessingAware {
     /**
      * Returns the first marker is the marker list or null if no markers are
      * available.
+     * 返回第一个标记。
      * 
      * This method is deprecated and exists solely for backward compatibility
      * reasons. Logback components should use {@link #getMarkerList()} and cater for
@@ -106,18 +134,20 @@ public interface ILoggingEvent extends DeferredProcessingAware {
 
     /**
      * Returns the MDC map. The returned value can be an empty map but not null.
+     * MDC的属性集
      */
     Map<String, String> getMDCPropertyMap();
 
     /**
-     * Synonym for [@link #getMDCPropertyMap}.
+     * Synonym for {@link #getMDCPropertyMap}.
      * 
-     * @deprecated Replaced by [@link #getMDCPropertyMap}
+     * @deprecated Replaced by {@link #getMDCPropertyMap}
      */
     Map<String, String> getMdc();
 
     /**
      * Return the number of elapsed milliseconds since epoch.
+     * 返回自 epoch 以来经过的毫秒数。
      * 
      * @return the number of elapsed milliseconds since epoch
      * @since 1.3
@@ -136,6 +166,7 @@ public interface ILoggingEvent extends DeferredProcessingAware {
 
     /**
      * Return the {@link java.time.Instant Instant} the event was created.
+     * 返回事件创建的即时时间。
      * 
      * Default implementation returns the instant corresponding to the value returned by @link
      * {@link #getTimeStamp()}.
@@ -149,6 +180,7 @@ public interface ILoggingEvent extends DeferredProcessingAware {
 
     /**
      * The sequence number associated with this event.
+     * 与此事件关联的序列号。
      * 
      * <p>
      * Sequence numbers, if present, should be increasing monotonically.
@@ -159,6 +191,7 @@ public interface ILoggingEvent extends DeferredProcessingAware {
 
     /**
      * A list of {@link KeyValuePair} objects. The returned list may be null.
+     * 键值对的对象列表
      * 
      * @return may be null
      * @since 1.3.0

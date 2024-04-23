@@ -13,6 +13,9 @@
  */
 package ch.qos.logback.core.spi;
 
+/**
+ * 延迟处理感知
+ */
 public interface DeferredProcessingAware {
 
     void prepareForDeferredProcessing();
